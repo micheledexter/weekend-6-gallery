@@ -10,6 +10,7 @@ class GalleryListItem extends Component {
     this.state = {
       likes: props.likes,
       showDescription: false,
+      deleted: false,
     }
   }
 
@@ -21,7 +22,7 @@ class GalleryListItem extends Component {
 
   getItemName = () => {
     let path = this.props.path;
-    path = path.split('/')[path.split('/').length -1];
+    path = path.split('/')[path.split('/').length - 1];
     path = path.split('?')[0];
     if (path.split('.').length > 1) {
       let current = '';
@@ -30,7 +31,7 @@ class GalleryListItem extends Component {
       }
       path = current;
     }
-    path = path.slice(0,1).toUpperCase() + path.slice(1);
+    path = path.slice(0, 1).toUpperCase() + path.slice(1);
     return path;
   }
 
@@ -52,21 +53,39 @@ class GalleryListItem extends Component {
     });
   }
 
+  deleteMonstrosity = id => {
+    axios({
+      method: 'DELETE',
+      url: `/gallery/${id}`
+    }).then(response => {
+      console.log(response.data);
+      this.setState({
+        deleted: true
+      });
+    }).catch(error => {
+      console.log(`ERROR during DELETE /gallery/:id: ${error}`);
+    });
+  }
+
   render() {
-    return (
-      <Paper style={{ display: "inline-block", margin: "15px" }}>
-        {this.state.showDescription ?
-          <p
-            onClick={this.toggleShow}
-            style={{ height: "206px", width: "220px", padding: "10px", fontSize: "1.1em", position: "relative"}}>{this.props.description}</p>
-          : 
-          <img src={this.props.path} onClick={this.toggleShow} alt="disturbing animal hybrid" style={{ width: "240px", height: "240px", borderRadius: "2px", position: "relative"}} />
-        }
-        {/* The REALLY complicated way of deriving/displaying the name based  */}
-        <h3>{this.getItemName()}</h3>
-        <Button variant="raised" color="primary" style={{ margin: "10px" }} onClick={() => this.addLike(this.props.id)}><ThumbUp /><pre> </pre>{this.state.likes}</Button>
-      </Paper>
-    );
+    if (!this.state.deleted) {
+      return (
+        <Paper style={{ display: "inline-block", margin: "15px" }}>
+          {this.state.showDescription ?
+            <p
+              onClick={this.toggleShow}
+              style={{ height: "206px", width: "220px", padding: "10px", fontSize: "1.1em", position: "relative" }}>{this.props.description}</p>
+            :
+            <img src={this.props.path} onClick={this.toggleShow} alt="disturbing animal hybrid" style={{ width: "240px", height: "240px", borderRadius: "2px", position: "relative" }} />
+          }
+          {/* The REALLY complicated way of deriving/displaying the name based  */}
+          <h3>{this.getItemName()}</h3>
+          <Button variant="raised" color="primary" style={{ margin: "10px" }} onClick={() => this.addLike(this.props.id)}><ThumbUp /><pre> </pre>{this.state.likes}</Button>
+          <Button variant="raised" color="secondary" style={{ margin: "10px" }} onClick={() => this.deleteMonstrosity(this.props.id)}>Delete</Button>
+        </Paper>
+      );
+    }
+    return '';
   }
 }
 

@@ -29,7 +29,7 @@ class AddItemForm extends Component {
       url: '/gallery',
       data: this.state.form
     }).then(response => {
-      console.log(response);
+      console.log(response.data);
       this.setState({
         form: emptyForm
       });
