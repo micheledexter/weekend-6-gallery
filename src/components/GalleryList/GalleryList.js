@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import Input from '@material-ui/core/Input';
-// import TextArea from '@material-ui/core/TextField';
 import GalleryListItem from '../GalleryListItem/GalleryListItem';
 
 class GalleryList extends Component {
