@@ -12,30 +12,11 @@ class GalleryList extends Component {
         description: '',
       }
     }
-    // this.handleChangeFor = this.handleChangeFor.bind(this);
-    // this.submitDisturbingHybrid = this.submitDisturbingHybrid.bind(this);
   }
-
-  // handleChangeFor = propertyName => event => {
-  //   this.setState({
-  //     ...this.state.newPicture,
-  //     [propertyName]: event.target.value,
-  //   });
-  //   console.log(this.state.newPicture);
-  // }
-  
-  // submitDisturbingHybrid = () => {
-
-  // };
 
   render() {
     return (
       <div className="galleryList">
-        {/* <div className="newDisturbingHybrid">
-          <form onSubmit={this.submitDisturbingHybrid}>
-          <Input placeholder="Image URL" value={this.state.newPicture.path} onChange={this.handleChangeFor('path')} />
-          </form>
-        </div> */}
         <ul>
           {/* map start here */}
           {this.props.list.map((item) =>
