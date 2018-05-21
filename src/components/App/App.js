@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 import GalleryList from '../GalleryList/GalleryList';
+import AddItemForm from '../AddItemForm/AddItemForm';
 
 class App extends Component {
   constructor(props) {
@@ -32,6 +33,8 @@ class App extends Component {
           <h1 className="App-title">Gallery of my life</h1>
         </header>
         <br/>
+        <AddItemForm getGalleryList={this.getGalleryList} />
+        <br />
         <GalleryList list={this.state.galleryList}/>
       </div>
     );

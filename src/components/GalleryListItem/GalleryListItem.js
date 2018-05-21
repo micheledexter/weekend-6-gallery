@@ -19,6 +19,21 @@ class GalleryListItem extends Component {
     });
   }
 
+  getItemName = () => {
+    let path = this.props.path;
+    path = path.split('/')[path.split('/').length -1];
+    path = path.split('?')[0];
+    if (path.split('.').length > 1) {
+      let current = '';
+      for (let i = 0; i < path.split('.').length - 1; i++) {
+        current += path.split('.')[i];
+      }
+      path = current;
+    }
+    path = path.slice(0,1).toUpperCase() + path.slice(1);
+    return path;
+  }
+
   addLike = (id) => {
     const reqBody = {
       likes: this.state.likes
@@ -48,7 +63,7 @@ class GalleryListItem extends Component {
           <img src={this.props.path} onClick={this.toggleShow} alt="disturbing animal hybrid" style={{ width: "240px", height: "240px", borderRadius: "2px", position: "relative"}} />
         }
         {/* The REALLY complicated way of deriving/displaying the name based  */}
-        <h3>{this.props.path.charAt(7).toUpperCase() + this.props.path.substring(8, (this.props.path.length - 4))}</h3>
+        <h3>{this.getItemName()}</h3>
         <Button variant="raised" color="primary" style={{ margin: "10px" }} onClick={() => this.addLike(this.props.id)}><ThumbUp /><pre> </pre>{this.state.likes}</Button>
       </Paper>
     );
